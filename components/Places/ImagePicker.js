@@ -1,4 +1,4 @@
-import { Alert, Button, Image, StyleSheet, Text, View } from "react-native";
+import { Alert, Image, StyleSheet, Text, View } from "react-native";
 import {
 	launchCameraAsync,
 	useCameraPermissions,
@@ -7,6 +7,7 @@ import {
 import { useState } from "react";
 
 import { Colors } from "../../constants/colors";
+import OutlinedButton from "../UI/OutlinedButton";
 
 const ImagePicker = () => {
 	const [pickedImage, setPickedImage] = useState();
@@ -36,7 +37,7 @@ const ImagePicker = () => {
 		return true;
 	};
 
-	const takeImagehandler = async () => {
+	const takeImageHandler = async () => {
 		const hasPermission = await verifyPermissions();
 
 		if (!hasPermission) {
@@ -65,7 +66,9 @@ const ImagePicker = () => {
 		<View>
 			<View style={styles.imagePreview}>{imagePreview}</View>
 
-			<Button title="Take Image" onPress={takeImagehandler} />
+			<OutlinedButton icon="camera" onPress={takeImageHandler}>
+				Take Image
+			</OutlinedButton>
 		</View>
 	);
 };
