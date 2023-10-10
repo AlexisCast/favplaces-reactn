@@ -13,7 +13,7 @@ import {
 
 import { Colors } from "../../constants/colors";
 import OutlinedButton from "../UI/OutlinedButton";
-import { getMapPreview } from "../../util/location";
+import { getAddress, getMapPreview } from "../../util/location";
 
 const LocationPicker = ({ onPickLocation }) => {
 	const [pickedLocation, setPickedLocation] = useState();
@@ -36,7 +36,17 @@ const LocationPicker = ({ onPickLocation }) => {
 	}, [route, isFocused]);
 
 	useEffect(() => {
-		onPickLocation(pickedLocation);
+		async function handleLocation() {
+			if (pickedLocation) {
+				const address = await getAddress(
+					pickedLocation.lat,
+					pickedLocation.lng
+				);
+				onPickLocation({ ...pickedLocation, address: address });
+			}
+		}
+
+		handleLocation();
 	}, [pickedLocation, onPickLocation]);
 
 	const verifyPermissions = async () => {
