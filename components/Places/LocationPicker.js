@@ -89,7 +89,12 @@ const LocationPicker = ({ onPickLocation }) => {
 	};
 
 	const pickOnMapHandler = () => {
-		navigation.navigate("Map");
+		// navigation.navigate("Map");
+		navigation.navigate("Map", {
+			initialLat: pickedLocation.lat,
+			initialLng: pickedLocation.lng,
+			readOnly: false,
+		});
 	};
 
 	let locationPreview = <Text>No location picked yet.</Text>;
@@ -112,9 +117,11 @@ const LocationPicker = ({ onPickLocation }) => {
 				<OutlinedButton icon="location" onPress={getLocationHandler}>
 					Locate User
 				</OutlinedButton>
-				<OutlinedButton icon="map" onPress={pickOnMapHandler}>
-					Pick on Map
-				</OutlinedButton>
+				{pickedLocation && (
+					<OutlinedButton icon="map" onPress={pickOnMapHandler}>
+						Pick on Map
+					</OutlinedButton>
+				)}
 			</View>
 		</View>
 	);
