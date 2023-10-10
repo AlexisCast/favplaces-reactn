@@ -8,10 +8,13 @@ import {
 
 import { Colors } from "../../constants/colors";
 import OutlinedButton from "../UI/OutlinedButton";
+import { useNavigation } from "@react-navigation/native";
 import { getMapPreview } from "../../util/location";
 
 const LocationPicker = () => {
 	const [pickedLocation, setPickedLocation] = useState();
+
+	const navigation = useNavigation();
 
 	const [locationPermissionInformation, requestPermission] =
 		useForegroundPermissions();
@@ -55,7 +58,9 @@ const LocationPicker = () => {
 		});
 	};
 
-	const pickOnMapHandler = () => {};
+	const pickOnMapHandler = () => {
+		navigation.navigate("Map");
+	};
 
 	let locationPreview = <Text>No location picked yet.</Text>;
 
