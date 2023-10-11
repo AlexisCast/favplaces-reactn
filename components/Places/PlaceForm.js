@@ -1,5 +1,12 @@
 import { useCallback, useState } from "react";
-import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+	Alert,
+	ScrollView,
+	StyleSheet,
+	Text,
+	TextInput,
+	View,
+} from "react-native";
 
 import { Colors } from "../../constants/colors";
 import { Place } from "../../models/place";
@@ -9,8 +16,8 @@ import Button from "../UI/Button";
 
 const PlaceForm = ({ onCreatePlace }) => {
 	const [enteredTitle, setEnteredTitle] = useState("");
-	const [selectedImage, setSelectedImage] = useState();
-	const [pickedLocation, setPickedLocation] = useState();
+	const [selectedImage, setSelectedImage] = useState(null);
+	const [pickedLocation, setPickedLocation] = useState(null);
 
 	const changeTitleHandler = (enteredText) => {
 		setEnteredTitle(enteredText);
@@ -25,12 +32,20 @@ const PlaceForm = ({ onCreatePlace }) => {
 	}, []);
 
 	const savePlaceHandler = () => {
-		const placeData = new Place(
-			enteredTitle,
-			selectedImage,
-			pickedLocation
-		);
-		onCreatePlace(placeData);
+		if (
+			enteredTitle.trim() !== "" &&
+			selectedImage != null &&
+			pickedLocation != null
+		) {
+			const placeData = new Place(
+				enteredTitle,
+				selectedImage,
+				pickedLocation
+			);
+			onCreatePlace(placeData);
+		} else {
+			Alert.alert("Error! ", "You need to fill in all the fields.");
+		}
 	};
 
 	return (

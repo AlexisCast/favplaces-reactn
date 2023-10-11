@@ -121,3 +121,23 @@ export const fetchPlaceDetails = (id) => {
 
 	return promise;
 };
+
+export const deletePlace = (id) => {
+	const promise = new Promise((resolve, reject) => {
+		database.transaction((tx) => {
+			tx.executeSql(
+				"DELETE FROM places WHERE id = ?",
+				[id],
+				(_, result) => {
+					console.log(result);
+					resolve(result);
+				},
+				(_, error) => {
+					reject(error);
+				}
+			);
+		});
+	});
+
+	return promise;
+};
